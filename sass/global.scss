@@ -9,6 +9,7 @@ $dark-grey: #222;
 * {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
+	word-wrap: break-word;
 }
 
 html, body {
@@ -41,7 +42,7 @@ h2 {
 .tagline {
 	font-size: 2em;
 	font-weight: 300;
-	margin: 0 auto;
+	margin: 1em auto;
 
 	h2 + & {
 		text-align: center;
@@ -62,6 +63,7 @@ nav {
 	position: fixed;
 	right: 2em;
 	top: 0;
+	z-index: 10;
 
 	a {
 		background: $dark-grey;
@@ -92,8 +94,9 @@ nav {
 .section {
 	background-position: top center;
 	border-bottom: 6px solid #111;
+	background-repeat: no-repeat;
 	
-	&[data-stellar-background-ratio] {
+	.stellar-on &[data-stellar-background-ratio] {
 		background-attachment: fixed;
 	}
 
@@ -115,40 +118,58 @@ nav {
 	}
 }
 
+/* CLIENTS */
+.clients {
+	text-align: center;
+	.row {
+		img {
+			max-width: 30%;
+			margin: 0 0 10% 0;
+			&:first-child {
+				margin-right: 18%;
+			}
+		}
+		&:last-child img {
+			margin-bottom: 0;
+		}
+	}
+}
+
+
+@mixin background($image, $position) {
+	background-image: url('/images/backgrounds/' + $image + '.jpg');
+	background-position: $position;
+
+	@media screen and (max-width:800px), (max-height:600px) {
+		background-position: center center !important;
+		background-attachment: scroll;
+		background-size: cover;
+	}
+}
+
 #home {
-	background-image: url('/images/home.jpg');
-	background-repeat: no-repeat;
-	background-position: left -750px;
+	background-attachment: fixed;
+	@include background('home', left -300px);
 }
 
 #what-we-do {
-	background-image: url('/images/what-we-do.jpg');
-	background-repeat: no-repeat;
-	background-position: center -750px;
+	@include background('what-we-do', center -100px);
 }
 
 #sydney-zombie-walk {
-	background-image: url('/images/sydney-zombie-walk.jpg');
-	background-repeat: no-repeat;
-	background-position: center -100px;
+	@include background('sydney-zombie-walk', center -100px);
 }
 
 #clients {
-	background-image: url('/images/clients.jpg');
-	background-repeat: no-repeat;
-	background-position: center -100px;
+	@include background('clients', center -100px);
 }
 
 #video {
-	background-image: url('/images/video.jpg');
-	background-repeat: no-repeat;
-	background-position: center -100px;
+	@include background('video', center -100px);
 }
 
 #contact {
-	background-image: url('/images/contact.jpg');
-	background-repeat: no-repeat;
-	background-position: center -100px;
+	@include background('contact', center -100px);
 }
 
 
@@ -201,7 +222,7 @@ nav {
 	}
 }
 
-@media screen and (max-width:500px) {
+@media screen and (max-width:520px) {
 	nav {
 		display: none;
 	}
